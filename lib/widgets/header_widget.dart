@@ -1,54 +1,26 @@
 import 'package:get/get.dart'; // Import Get package for state management
 import 'package:weatherapp/controller/global_controller.dart'; // Import GlobalController for accessing global app state
 import 'package:flutter/material.dart'; // Import Flutter material library
-import 'package:geocoding/geocoding.dart'; // Import geocoding library for reverse geocoding
-import 'package:intl/intl.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 // Define a stateful widget for the header of the app
-class HeaderWidget extends StatefulWidget {
-  const HeaderWidget({super.key});
-  @override
-  State<HeaderWidget> createState() => _HeaderWidgetState();
-}
 
-class _HeaderWidgetState extends State<HeaderWidget> {
-  String city = ""; // Variable to hold the city name
-  String state = ""; // Variable to hold the state name
+
+class HeaderWidget extends StatelessWidget {
+
+   HeaderWidget({super.key});
 
   // Initialize GlobalController for accessing global app state
   final GlobalController globalController =
       Get.put(GlobalController(), permanent: true);
 
-  @override
-  void initState() {
-    // Get the address based on latitude and longitude when the widget is initialized
-    getAddress(globalController.getLatitude().value,
-        globalController.getLongitude().value);
 
-    super.initState();
-  }
 
   // Method to fetch the address based on latitude and longitude
-  getAddress(lat, lon) async {
-    // Retrieve a list of placemarks based on the provided latitude and longitude
-    List<Placemark> placemark = await placemarkFromCoordinates(lat, lon);
-
-    // Update the city and state variables with the retrieved placemark information
-    setState(() {
-      city =
-          placemark[0].locality!; // Get the city name from the first placemark
-      state = placemark[0]
-          .administrativeArea!; // Get the state name from the first placemark
-    });
-  }
-
+  
   @override
   Widget build(BuildContext context) {
-    // Get the current date and time
-    DateTime now = DateTime.now();
-    // Format the date and time using the specified format
-    String formattedDate = DateFormat('MM/dd').format(now);
+   
 
     // Return the header widget containing the city, state, and formatted date
     return SingleChildScrollView(
@@ -69,8 +41,8 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                   child: Row(
                     children: [
                       Text(
-                        city + "," + state,
-                        style: const TextStyle(
+                        globalController.city.value + "," + globalController.state.value,
+                        style:  TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
@@ -118,7 +90,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                               ),
                             ),
                             TextSpan(
-                              text: '   $formattedDate',
+                              text: '   ${globalController.formattedDate}',
                               style: const TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.w400,
@@ -142,7 +114,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                     width: 200,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 60,
                 ),
                 Padding(
@@ -155,7 +127,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
 
                         borderRadius: BorderRadius.circular(10)),
                     child: Padding(
-                      padding: EdgeInsets.only(top: 30.0, right: 40, left: 40),
+                      padding: const EdgeInsets.only(top: 30.0, right: 40, left: 40),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -170,8 +142,8 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                               ),
                               Text(
                                 '${globalController.fetchedWeatherWindSpeed.value} Km/h',
-                                style: TextStyle(
-                                  color: const Color(
+                                style: const TextStyle(
+                                  color: Color(
                                       0xFF19C3FB), // Hexadecimal color value
                                 ),
                               )
@@ -187,8 +159,8 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                               ),
                               Text(
                                 '${globalController.fetchedWeatherCloud.value}%',
-                                style: TextStyle(
-                                  color: const Color(
+                                style: const TextStyle(
+                                  color: Color(
                                       0xFF19C3FB), // Hexadecimal color value
                                 ),
                               )
@@ -204,8 +176,8 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                               ),
                               Text(
                                 '${globalController.fetchedWeatherHumidity.value}%',
-                                style: TextStyle(
-                                  color: const Color(
+                                style: const TextStyle(
+                                  color: Color(
                                       0xFF19C3FB), // Hexadecimal color value
                                 ),
                               )
@@ -216,13 +188,13 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Center(
                   child: Column(
                     children: [
-                      Text('Comfort level',
+                      const Text('Comfort level',
                           style: TextStyle(fontSize: 25, color: Colors.white)),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       SleekCircularSlider(
                         min: 0,
                         max: 100,
@@ -247,11 +219,11 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                           ),
                           customColors: CustomSliderColors(
                             hideShadow: true,
-                            trackColor: Color.fromARGB(255, 255, 255, 255)
+                            trackColor: const Color.fromARGB(255, 255, 255, 255)
                                 .withAlpha(100),
                             progressBarColors: [
-                              Color.fromARGB(255, 255, 255, 255),
-                              Color.fromARGB(255, 255, 255, 255)
+                              const Color.fromARGB(255, 255, 255, 255),
+                              const Color.fromARGB(255, 255, 255, 255)
                             ],
                           ),
                         ),

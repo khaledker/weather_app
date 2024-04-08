@@ -3,15 +3,10 @@ import 'package:get/get.dart';
 import 'package:weatherapp/controller/global_controller.dart';
 import 'package:weatherapp/widgets/header_widget.dart';
 
-class HomePage extends StatefulWidget {
 
-  const HomePage({Key? key   }) : super(key: key);
+class HomePage extends StatelessWidget {
+     HomePage({Key? key   }) : super(key: key);
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   final GlobalController globalController =
       Get.put(GlobalController(), permanent: true);
 
